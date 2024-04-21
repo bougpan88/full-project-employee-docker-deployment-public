@@ -1,0 +1,39 @@
+version: "3.7"
+services:
+  db:
+    build:
+      context: .
+      dockerfile: Dockerfile_create_db
+    image: postgres
+    container_name: postgres_custom_db
+    restart: always
+    environment:
+      POSTGRES_DB: employer
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      PGDATA: /var/lib/postgresql/data
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  backend:
+    build:
+       context: .
+       dockerfile: Dockerfile_create_backend    
+    image: backend_spring_boot
+    container_name: backend_spring_boot
+    restart: always    
+    ports:
+      - "9595:9595"    
+  frontend:
+    build:
+       context: .
+       dockerfile: Dockerfile_create_frontend 
+    image: frontend_angular_nginx
+    container_name: frontend_angular_nginx
+    ports:
+      - "80:80" 
+volumes:
+  db-data:
+    name: postgresMyvolume
+    external: true

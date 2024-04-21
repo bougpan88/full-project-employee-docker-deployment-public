@@ -1,0 +1,4 @@
+FROM nginx:latest
+COPY /angular_front_end/nginx.conf /etc/nginx/conf.d/default.conf
+COPY /angular_front_end/dist/employer-angular/  /usr/share/nginx/html/
+EXPOSE 80
